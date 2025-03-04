@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform Player;  // Reference to the player ball
-    public float smoothSpeed = 5f; // Smoothing factor for camera movement
-    public float rotationSpeed = 100f; // Speed of camera rotation
+    public Transform Player;  
+    public float smoothSpeed = 5f; //smoothing factor for camera movement
+    public float rotationSpeed = 100f; //speed of camera rotation
 
     private Vector3 offset;
-    private float currentAngle = 0f; // Track camera angle
+    private float currentAngle = 0f; //track camera angle
 
     void Start()
     {
-        // Store initial offset
+        //initial offset
         offset = transform.position - Player.position;
     }
 
@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
         // Smoothly move the camera to the new position
         transform.position = Vector3.Lerp(transform.position, newPosition, smoothSpeed * Time.deltaTime);
 
-        // Always look at the player
+        //looks at player
         transform.LookAt(Player);
     }
 }
