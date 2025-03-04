@@ -1,26 +1,34 @@
 using UnityEngine;
-using System.Collections;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour
+{
+    public Transform Player;  // Reference to the player ball
+    public float smoothSpeed = 5f; // Smoothing factor for camera movement
+    public float rotationSpeed = 100f; // Speed of camera rotation
 
-	// store a public reference to the Player game object, so we can refer to it's Transform
-	public GameObject player;
+    private Vector3 offset;
+    private float currentAngle = 0f; // Track camera angle
 
-	// Store a Vector3 offset from the player (a distance to place the camera from the player at all times)
-	private Vector3 offset;
+    void Start()
+    {
+        // Store initial offset
+        offset = transform.position - Player.position;
+    }
 
-	// At the start of the game..
-	void Start ()
-	{
-		// Create an offset by subtracting the Camera's position from the player's position
-		offset = transform.position - player.transform.position;
-	}
+    void LateUpdate()
+    {
+        // Read input from movement keys
+        float horizontal = Input.GetAxis("Horizontal");
+        
+        // Rotate camera based on player movement
+        currentAngle += horizontal * rotationSpeed * Time.deltaTime;
+        Quaternion rotation = Quaternion.Euler(0, currentAngle, 0);
+        Vector3 newPosition = Player.position + rotation * offset;
 
-	// After the standard 'Update()' loop runs, and just before each frame is rendered..
-	void LateUpdate ()
-	{
-		// Set the position of the Camera (the game object this script is attached to)
-		// to the player's position, plus the offset amount
-		transform.position = player.transform.position + offset;
-	}
+        // Smoothly move the camera to the new position
+        transform.position = Vector3.Lerp(transform.position, newPosition, smoothSpeed * Time.deltaTime);
+
+        // Always look at the player
+        transform.LookAt(Player);
+    }
 }
