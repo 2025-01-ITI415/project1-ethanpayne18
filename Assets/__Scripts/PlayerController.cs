@@ -2,8 +2,8 @@
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10f;          // Movement speed
-    public float torque = 50f;         // Rotation speed (higher = faster turning)
+    public float speed = 10f;          // default movement speed
+    public float torque = 50f;         // rotation speed (higher = faster turning)
     public float stoppingDrag = 5f;    // Drag value to stop faster
     public float normalDrag = 0.5f;    // Normal drag when moving
     private Rigidbody rb;
